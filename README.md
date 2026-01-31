@@ -1,66 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ANAIR Web - Sistem Informasi Manajemen Produksi & Gudang
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem informasi berbasis web untuk pengelolaan administrasi produksi, gudang (stok), dan transaksi keluar barang di PT. ADITYA TIRTA ABADI UTAMA. Dibuat menggunakan Framework Laravel.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **Manajemen User & Role:**
+    -   Superadmin (Akses penuh ke manajemen user)
+    -   Admin (Akses kelola data master, produksi, stok, dan transaksi)
+    -   Karyawan (Akses view/input terbatas)
+-   **Master Data:** Pengelolaan data produk (barang).
+-   **Laporan Produksi:** Pencatatan hasil produksi harian, target, hasil, reject, dan nomor batch.
+-   **Stok Barang:** Manajemen stok masuk manual dan otomatis dari hasil produksi.
+-   **Transaksi Barang Keluar:** Pencatatan barang keluar (Surat Jalan/BBK) yang otomatis memotong stok.
+-   **Cetak Laporan:** Fitur preview dan cetak surat jalan serta laporan produksi.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Persyaratan Sistem (Localhost)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Sebelum menjalankan aplikasi, pastikan komputer Anda sudah terinstall:
 
-## Learning Laravel
+1.  **PHP** (Minimal versi 8.0 atau 8.2 direkomendasikan).
+2.  **Composer** (Dependency manager PHP).
+3.  **MySQL / MariaDB** (Database, bisa via XAMPP/Laragon).
+4.  **Web Server** (Apache/Nginx, atau bisa pakai `php artisan serve`).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Panduan Instalasi & Setup
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Ikuti langkah-langkah berikut untuk menjalankan project ini di komputer lokal Anda:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clone atau Download Project
+Jika menggunakan git:
+```bash
+git clone https://github.com/username/anair_web.git
+cd anair_web
+```
+Atau ekstrak file `.zip` project ke folder kerja Anda.
 
-## Laravel Sponsors
+### 2. Install Dependensi
+Jalankan perintah ini di terminal (pastikan berada di dalam folder project):
+```bash
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Konfigurasi Environment (.env)
+Copy file `.env.example` dan ubah namanya menjadi `.env`:
+```bash
+cp .env.example .env
+```
+_(Atau copy-paste manual file `.env.example`, rename jadi `.env`)_
 
-### Premium Partners
+Buka file `.env` dengan text editor, lalu sesuaikan konfigurasi database:
+```editor
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=anair          <-- Sesuaikan nama db
+DB_USERNAME=root           <-- Sesuaikan username db (default xampp: root)
+DB_PASSWORD=               <-- Sesuaikan password db (default xampp: kosong)
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 4. Generate Key Aplikasi
+Jalankan perintah berikut untuk membuat key enkripsi Laravel:
+```bash
+php artisan key:generate
+```
 
-## Contributing
+### 5. Setup Database
+Pastikan Anda sudah membuat database kosong bernama `anair` (atau sesuai yang di `.env`) di phpMyAdmin/SQL Client.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Lalu jalankan migrasi tabel dan seeder (data awal):
+```bash
+php artisan migrate:fresh --seed
+```
+_Perintah ini akan membuat semua tabel dan mengisi data user default._
 
-## Code of Conduct
+### 6. Jalankan Aplikasi
+Jalankan server lokal Laravel:
+```bash
+php artisan serve
+```
+Akses aplikasi di browser melalui alamat:
+`http://127.0.0.1:8000`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Akun Login Default
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Gunakan akun berikut untuk masuk pertama kali:
 
-## License
+| Role | Username | Password |
+| :--- | :--- | :--- |
+| **Super Admin** | `superadmin` | `12345` |
+| **Admin Gudang** | `admin` | `12345` |
+| **Karyawan** | `karyawan` | `12345` |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+_Catatan: Segera ganti password setelah login demi keamanan._
+
+## Troubleshooting Umum
+
+-   **Error "Vite manifest not found":**
+    Jika tampilan berantakan atau ada error terkait aset, coba jalankan:
+    ```bash
+    npm install
+    npm run build
+    ```
+    _(Memerlukan Node.js terinstall)_
+
+-   **Error Database:**
+    Pastikan database sudah dibuat dan konfigurasi `.env` sudah benar. Coba jalankan `php artisan config:clear` jika habis mengubah file `.env`.
+
+-   **Gambar/File tidak muncul:**
+    Jalankan perintah symlink storage:
+    ```bash
+    php artisan storage:link
+    ```
+
+---
+**PT. ADITYA TIRTA ABADI UTAMA**
+Internal System
+
+### Kontak & Dukungan
+Jika memiliki kendala atau pertanyaan teknis terkait aplikasi ini, silahkan hubungi saya melalui GitHub:
+[https://github.com/RockieBoy/](https://github.com/RockieBoy/)
